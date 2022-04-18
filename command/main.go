@@ -20,13 +20,14 @@ func main() {
 	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     configs.Host,
-		Port:     configs.Port,
-		Username: configs.Username,
+		Host:     configs.DBHost,
+		Port:     configs.DBPort,
+		Username: configs.DBUsername,
 		DBName:   configs.DBName,
-		SSLMode:  configs.SSLMode,
-		Password: configs.Password,
+		SSLMode:  configs.DBSSLMode,
+		Password: configs.DBPassword,
 	})
+
 	if err != nil {
 		log.Fatalf("failed to initialize db: %s", err.Error())
 	}
@@ -36,7 +37,7 @@ func main() {
 	handlers := handler.NewHandler(services)
 
 	srv := new(server.Server)
-	if err := srv.Run("8000", handlers.InitRoutes()); err != nil {
+	if err := srv.Run(configs.ServerPort, handlers.InitRoutes()); err != nil {
 		log.Fatalf("error occurred while running http server: %s", err.Error())
 	}
 }
