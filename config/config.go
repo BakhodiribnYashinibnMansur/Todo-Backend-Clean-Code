@@ -18,7 +18,7 @@ type Configs struct {
 	DBSSLMode  string `default:"false"`
 }
 
-func InitConfig() (dbcnfg *Configs, err error) {
+func InitConfig() (cnfg *Configs, err error) {
 	viper.AddConfigPath("./config")
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
@@ -26,14 +26,14 @@ func InitConfig() (dbcnfg *Configs, err error) {
 	err = viper.ReadInConfig()
 
 	if err != nil {
-		return dbcnfg, fmt.Errorf("fatal error config file: %w ", err)
+		return cnfg, fmt.Errorf("fatal error config file: %w ", err)
 	}
 
 	if err := godotenv.Load(); err != nil {
-		return dbcnfg, fmt.Errorf("error loading env variables: %s", err.Error())
+		return cnfg, fmt.Errorf("error loading env variables: %s", err.Error())
 	}
 
-	dbcnfg = &Configs{
+	cnfg = &Configs{
 		ServerPort: viper.GetString("port"),
 		DBHost:     viper.GetString("db.host"),
 		DBPort:     viper.GetString("db.port"),

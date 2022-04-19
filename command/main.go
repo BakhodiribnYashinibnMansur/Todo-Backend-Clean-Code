@@ -1,22 +1,22 @@
 package main
 
 import (
-	"log"
-
 	"todocc/config"
 	"todocc/package/handler"
 	"todocc/package/repository"
 	"todocc/package/service"
 	"todocc/server"
+	"todocc/util/logrus"
 
 	_ "github.com/lib/pq"
 )
 
 func main() {
+	logger := logrus.GetLogger()
 
 	configs, err := config.InitConfig()
 	if err != nil {
-		log.Fatalf("error initializing configs: %s", err.Error())
+		logger.Fatalf("error initializing configs: %s", err.Error())
 	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
@@ -28,8 +28,10 @@ func main() {
 		Password: configs.DBPassword,
 	})
 
+	logger.Infof("configs: %v", configs)
+
 	if err != nil {
-		log.Fatalf("failed to initialize db: %s", err.Error())
+		logger.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
 	repos := repository.NewRepository(db)
@@ -38,6 +40,6 @@ func main() {
 
 	srv := new(server.Server)
 	if err := srv.Run(configs.ServerPort, handlers.InitRoutes()); err != nil {
-		log.Fatalf("error occurred while running http server: %s", err.Error())
+		logger.Fatalf("error occurred while running http server: %s", err.Error())
 	}
 }
