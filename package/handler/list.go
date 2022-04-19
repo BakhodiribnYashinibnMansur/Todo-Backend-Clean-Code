@@ -1,8 +1,16 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
 
-func (h *Handler) createList(c *gin.Context) {
+	"github.com/gin-gonic/gin"
+)
+
+func (h *Handler) createList(ctx *gin.Context) {
+	id, _ := ctx.Get(userCtx)
+	ctx.JSON(http.StatusOK, map[string]interface{}{
+		"id": id,
+	})
 
 }
 
