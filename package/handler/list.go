@@ -15,7 +15,7 @@ import (
 // @ID create-list
 // @Accept  json
 // @Produce  json
-// @Param input body todo.TodoList true "list info"
+// @Param input body model.TodoList true "list info"
 // @Success 200 {integer} integer 1
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
@@ -87,7 +87,7 @@ func (h *Handler) getAllLists(ctx *gin.Context) {
 // @ID get-list-by-id
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} todo.ListItem
+// @Success 200 {object} model.ListItem
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
