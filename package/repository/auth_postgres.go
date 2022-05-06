@@ -23,7 +23,6 @@ func (r *AuthPostgres) CreateUser(user model.User) (int, error) {
 	if err := row.Scan(&id); err != nil {
 		return 0, err
 	}
-
 	return id, nil
 }
 

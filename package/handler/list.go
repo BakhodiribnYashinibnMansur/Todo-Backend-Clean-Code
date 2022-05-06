@@ -23,7 +23,7 @@ import (
 // @Router /api/lists [post]
 
 func (h *Handler) createList(c *gin.Context) {
-	id, _ := c.Get(userCtx)
+	// id, _ := c.Get(userCtx)
 	userId, err := getUserId(c)
 	if err != nil {
 		return
@@ -35,7 +35,7 @@ func (h *Handler) createList(c *gin.Context) {
 		return
 	}
 
-	id, err = h.services.TodoList.Create(userId, input)
+	id, err := h.services.TodoList.Create(userId, input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
